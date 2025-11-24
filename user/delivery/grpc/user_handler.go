@@ -2,10 +2,9 @@ package grpc
 
 import (
 	"context"
-
-	"github.com/imimran/go-grpc-auth/internal/domain"
-	"github.com/imimran/go-grpc-auth/internal/usecase"
+	"github.com/imimran/go-grpc-auth/user/usecase"
 	pb "github.com/imimran/go-grpc-auth/proto"
+	transformer "github.com/imimran/go-grpc-auth/user/transformer/grpc"
 )
 
 type UserHandler struct {
@@ -22,7 +21,7 @@ func (h *UserHandler) CreateUser(ctx context.Context, req *pb.CreateUserRequest)
 	if err != nil {
 		return nil, err
 	}
-	return toProtoUser(user), nil
+	return transformer.ToProtoUser(user), nil
 }
 
 func (h *UserHandler) GetUser(ctx context.Context, req *pb.UserId) (*pb.User, error) {
@@ -30,7 +29,7 @@ func (h *UserHandler) GetUser(ctx context.Context, req *pb.UserId) (*pb.User, er
 	if err != nil {
 		return nil, err
 	}
-	return toProtoUser(user), nil
+	return transformer.ToProtoUser(user), nil
 }
 
 func (h *UserHandler) UpdateUser(ctx context.Context, req *pb.UpdateUserRequest) (*pb.User, error) {
@@ -38,7 +37,7 @@ func (h *UserHandler) UpdateUser(ctx context.Context, req *pb.UpdateUserRequest)
 	if err != nil {
 		return nil, err
 	}
-	return toProtoUser(user), nil
+	return transformer.ToProtoUser(user), nil
 }
 
 func (h *UserHandler) DeleteUser(ctx context.Context, req *pb.UserId) (*pb.Empty, error) {
@@ -47,19 +46,18 @@ func (h *UserHandler) DeleteUser(ctx context.Context, req *pb.UserId) (*pb.Empty
 }
 
 func (h *UserHandler) ListUsers(ctx context.Context, req *pb.Empty) (*pb.UserListResponse, error) {
-	users, err := h.userUsecase.List()
-	if err != nil {
-		return nil, err
-	}
+    users, err := h.userUsecase.List()
+    if err != nil {
+        return nil, err
+    }
 
-	resp := &pb.UserListResponse{}
+    resp := &pb.UserListResponse{
+        Users: transformer.ToProtoUserList(users),
+    }
 
-	for _, user := range users {
-		resp.Users = append(resp.Users, toProtoUser(user))
-	}
-
-	return resp, nil
+    return resp, nil
 }
+
 
 func (h *UserHandler) Login(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
 	token, err := h.userUsecase.Login(req.Email, req.Password)
@@ -68,14 +66,4 @@ func (h *UserHandler) Login(ctx context.Context, req *pb.LoginRequest) (*pb.Logi
 	}
 
 	return &pb.LoginResponse{Token: token}, nil
-}
-
-// Correct final version (domain.User only)
-func toProtoUser(user *domain.User) *pb.User {
-	return &pb.User{
-		Id:       user.ID,
-		Email:    user.Email,
-		Password: "", // Never expose password
-		FullName: user.FullName,
-	}
 }

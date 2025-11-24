@@ -3,7 +3,7 @@ package infrastructure
 import (
 	"log"
 
-	"github.com/imimran/go-grpc-auth/internal/domain"
+	"github.com/imimran/go-grpc-auth/user/domain"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

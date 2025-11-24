@@ -3,7 +3,7 @@ package repository
 import (
 	"errors"
 
-	"github.com/imimran/go-grpc-auth/internal/domain"
+	"github.com/imimran/go-grpc-auth/user/domain"
 
 	"gorm.io/gorm"
 )

@@ -5,10 +5,10 @@ import (
     "net"
 
     pb "github.com/imimran/go-grpc-auth/proto"
-    grpcDelivery "github.com/imimran/go-grpc-auth/internal/delivery/grpc"
-    "github.com/imimran/go-grpc-auth/internal/infrastructure"
-    "github.com/imimran/go-grpc-auth/internal/repository"
-    "github.com/imimran/go-grpc-auth/internal/usecase"
+    grpcDelivery "github.com/imimran/go-grpc-auth/user/delivery/grpc"
+    "github.com/imimran/go-grpc-auth/infrastructure"
+    "github.com/imimran/go-grpc-auth/user/repository"
+    "github.com/imimran/go-grpc-auth/user/usecase"
 
     "github.com/spf13/cobra"
     "github.com/spf13/viper"

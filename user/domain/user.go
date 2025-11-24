@@ -6,10 +6,10 @@ import (
 )
 
 type User struct {
-	ID       int64
-	Email    string
-	Password string // hashed password
-	FullName string
+	ID int64 `gorm:"primaryKey"`
+	Email    string `gorm:"unique;not null;type:varchar(255)"`
+	Password string `gorm:"not null"` // Stored as bcrypt hash
+	FullName string `gorm:"type:varchar(255)"`
 }
 
 func NewUser(email, password, fullName string) (*User, error) {

@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/imimran/go-grpc-auth/internal/domain"
-	"github.com/imimran/go-grpc-auth/internal/repository"
+	"github.com/imimran/go-grpc-auth/user/domain"
+	"github.com/imimran/go-grpc-auth/user/repository"
 
 	"github.com/golang-jwt/jwt/v5"
 )
