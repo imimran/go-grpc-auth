@@ -1,8 +1,0 @@
-database:
-  dsn: "host=localhost user=postgres password=root dbname=go-grpc-auth port=5432 sslmode=disable TimeZone=Asia/Dhaka"
-
-server:
-  port: ":50051"
-
-jwt:
-  secret: "your_super_secret_key"
