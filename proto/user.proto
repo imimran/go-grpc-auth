@@ -2,7 +2,8 @@ syntax = "proto3";
 
 package user;
 
-option go_package = "go-grpc-auth/proto;proto";
+option go_package = "github.com/imimran/go-grpc-auth/pb";
+
 
 message User {
   int64 id = 1;

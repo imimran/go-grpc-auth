@@ -51,10 +51,13 @@ func (h *UserHandler) ListUsers(ctx context.Context, req *pb.Empty) (*pb.UserLis
 	if err != nil {
 		return nil, err
 	}
+
 	resp := &pb.UserListResponse{}
+
 	for _, user := range users {
 		resp.Users = append(resp.Users, toProtoUser(user))
 	}
+
 	return resp, nil
 }
 
@@ -63,26 +66,16 @@ func (h *UserHandler) Login(ctx context.Context, req *pb.LoginRequest) (*pb.Logi
 	if err != nil {
 		return nil, err
 	}
+
 	return &pb.LoginResponse{Token: token}, nil
 }
 
-func toProtoUser(user *usecase.User) *pb.User {
-	return &pb.User{
-		Id:       user.ID,
-		Email:    user.Email,
-		Password: "", // do NOT expose password
-		FullName: user.FullName,
-	}
-}
-
-// NOTE: Correction: `user` in toProtoUser is domain.User, not usecase.User.
-// Adjust to domain.User:
-
+// Correct final version (domain.User only)
 func toProtoUser(user *domain.User) *pb.User {
 	return &pb.User{
 		Id:       user.ID,
 		Email:    user.Email,
-		Password: "",
+		Password: "", // Never expose password
 		FullName: user.FullName,
 	}
 }
