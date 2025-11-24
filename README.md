@@ -1,89 +1,147 @@
-Go gRPC Auth Service
 
-A robust User Authentication service built with Golang, following Clean Architecture principles and communicating via gRPC.
+---
 
-📂 Project Structure
+# 🚀 Go gRPC Auth Service
 
-The project follows a modular structure based on Clean Architecture layers to ensure separation of concerns and testability.
+A robust **User Authentication service** built with **Golang**, following **Clean Architecture** principles and communicating through **gRPC**.
 
+This project ensures high maintainability, modularity, testability, and clear separation of concerns.
+
+---
+
+## 📁 Project Structure
+
+The project follows a modular folder structure aligned with **Clean Architecture**:
+
+```
 GO-GRPC-AUTH/
-├── cmd/                    # Command-line commands (serve, migrate, etc.)
-├── config/                 # Configuration loading logic
-├── infrastructure/         # Infrastructure setup (Database connections, etc.)
-├── proto/                  # Protocol Buffer definitions and generated code
-└── user/                   # User Domain Module
-    ├── delivery/grpc       # gRPC handlers (Presentation layer)
-    ├── domain/             # Domain models and interfaces
-    ├── repository/         # Database access layer
-    ├── transformer/        # Data transformation logic
-    └── usecase/            # Business logic layer
-├── config.yaml             # Application configuration
-└── main.go                 # Application entry point
+├── cmd/                 # CLI commands (serve, migrate, etc.)
+├── config/              # Configuration loading logic
+├── infrastructure/      # Infrastructure setup (DB connections, logger, etc.)
+├── proto/               # Protocol Buffers & generated gRPC code
+└── user/                # User Domain Module
+    ├── delivery/grpc    # gRPC handlers (presentation layer)
+    ├── domain/          # Domain models & interfaces (core business rules)
+    ├── repository/      # Database access layer (implements domain interfaces)
+    ├── transformer/     # Request/response transformation logic
+    └── usecase/         # Business logic layer
+├── config.yaml          # Application configuration
+└── main.go              # Application entry point
+```
 
+---
 
-🛠️ Prerequisites
+## 🛠️ Prerequisites
 
-Go: 1.20+
+Ensure you have the following installed:
 
-Protoc: Protocol Buffer Compiler
+* **Go 1.20+**
+* **Protocol Buffer Compiler (protoc)**
+* **Protoc Go plugins:**
 
-Protoc Go Plugins:
+  * `protoc-gen-go`
+  * `protoc-gen-go-grpc`
 
-protoc-gen-go
+Install plugins:
 
-protoc-gen-go-grpc
+```bash
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+```
 
-🚀 Getting Started
+Make sure `$GOPATH/bin` is in your PATH.
 
-1. Clone and Install Dependencies
+---
 
-git clone <repository-url>
+## 🚀 Getting Started
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/yourname/GO-GRPC-AUTH.git
 cd GO-GRPC-AUTH
 go mod download
+```
 
+---
 
-2. Configuration
+### 2️⃣ Configure the Application
 
-Ensure your config.yaml file is set up correctly in the root directory. This file likely contains your database credentials and server port configurations.
+Create / update your `config.yaml` file in the root directory.
 
-3. Generate Protobuf Files
+Example:
 
-If you modify the .proto files, regenerate the Go code using the following command:
+```yaml
+server:
+  port: 50051
 
+database:
+  host: localhost
+  user: postgres
+  password: secret
+  name: auth_db
+  port: 5432
+  sslmode: disable
+```
+
+---
+
+### 3️⃣ Generate Protobuf Files
+
+Whenever you modify `.proto` files:
+
+```bash
 protoc \
   --go_out=. --go_opt=paths=source_relative \
   --go-grpc_out=. --go-grpc_opt=paths=source_relative \
   proto/user.proto
+```
 
+---
 
-4. Running the Application
+## ▶️ Running the Application
 
-Start the Server:
+### Start gRPC Server
 
-To start the gRPC server, use the serve command defined in your cmd package:
-
+```bash
 go run main.go serve
+```
 
+### Run Database Migrations
 
-Database Migrations:
-
-Based on the project structure (cmd/migrate.go), you likely have a migration command available:
-
+```bash
 go run main.go migrate
+```
 
+---
 
-🏗️ Architecture Overview
+## 🏗️ Architecture Overview
 
-This project implements Clean Architecture:
+This project is implemented using **Clean Architecture**, ensuring minimal coupling and maximum flexibility.
 
-Domain: (user/domain) Contains the core business entities and interface definitions. This layer depends on nothing.
+### 🧩 Domain Layer (`user/domain`)
 
-Usecase: (user/usecase) Contains the business rules and logic. It orchestrates the flow of data to and from the domain entities.
+* Core business entities (e.g., `User`)
+* Domain interfaces
+* Contains no external dependencies
 
-Repository: (user/repository) Handles data access (SQL, NoSQL, etc.). It implements interfaces defined in the domain layer.
+### ⚙️ Usecase Layer (`user/usecase`)
 
-Delivery: (user/delivery/grpc) The transport layer. In this case, it handles gRPC requests and maps them to the usecase layer.
+* Application-specific business logic
+* Coordinates between domain & repository layers
 
-📜 License
+### 🗂 Repository Layer (`user/repository`)
 
-MIT
+* Database interaction (PostgreSQL, MySQL, etc.)
+* Implements domain interfaces
+
+### 🚪 Delivery Layer (`user/delivery/grpc`)
+
+* gRPC request handlers
+* Maps incoming gRPC calls to usecases
+
+---
+
+## 📄 License
+
+Distributed under the **MIT License**.
