@@ -12,6 +12,6 @@ func AutoMigrate(db *gorm.DB) error {
 		return err
 	}
 
-	log.Println("✅ Auto migration complete")
+	log.Println("Auto migration complete")
 	return nil
 }
