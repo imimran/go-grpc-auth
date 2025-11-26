@@ -1,11 +1,10 @@
 database:
-  host: "localhost"
+  host: "host.docker.internal"
   user: "postgres"
   password: "root"
   name: "go-grpc-auth"
-  port: 5432
+  port: 5435
   sslmode: "disable"
-  timezone: "Asia/Dhaka"
 
 server:
   port: ":50051"

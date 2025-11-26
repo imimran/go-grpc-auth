@@ -11,14 +11,13 @@ import (
 
 func buildDSN(cfg config.DatabaseConfig) string {
 	return fmt.Sprintf(
-		"host=%s user=%s password=%s dbname=%s port=%d sslmode=%s TimeZone=%s",
+		"host=%s user=%s password=%s dbname=%s port=%d sslmode=%s",
 		cfg.Host,
 		cfg.User,
 		cfg.Password,
 		cfg.Name,
 		cfg.Port,
 		cfg.SSLMode,
-		cfg.TimeZone,
 	)
 }
 
