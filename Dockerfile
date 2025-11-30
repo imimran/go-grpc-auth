@@ -11,6 +11,7 @@ WORKDIR /app
 # Install Go protobuf plugins
 RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 RUN go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+RUN go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
 
 # Add Go bin to PATH
 ENV PATH="/root/go/bin:${PATH}"
@@ -19,19 +20,22 @@ ENV PATH="/root/go/bin:${PATH}"
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Copy project
+# Copy project files
 COPY . .
 
-# Re-generate proto files
-RUN protoc \
-    --go_out=. --go_opt=paths=source_relative \
-    --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-    proto/user.proto
+# Clone googleapis once here
+RUN rm -rf googleapis && git clone https://github.com/googleapis/googleapis.git
 
-# Build binary
+# Generate proto files (use relative path to googleapis)
+RUN protoc -I. -I./googleapis \
+  --go_out . --go_opt paths=source_relative \
+  --go-grpc_out . --go-grpc_opt paths=source_relative \
+  --grpc-gateway_out . --grpc-gateway_opt paths=source_relative \
+  proto/user.proto
+
+# Build the Go binary
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
     go build -ldflags="-s -w" -o /out/app main.go
-
 
 # -----------------------------
 # Stage 2: Runtime

@@ -4,6 +4,7 @@ package user;
 
 option go_package = "github.com/imimran/go-grpc-auth/pb";
 
+import "google/api/annotations.proto";
 
 message User {
   int64 id = 1;
@@ -45,10 +46,37 @@ message UserListResponse {
 }
 
 service UserService {
-  rpc CreateUser(CreateUserRequest) returns (User);
-  rpc GetUser(UserId) returns (User);
-  rpc UpdateUser(UpdateUserRequest) returns (User);
-  rpc DeleteUser(UserId) returns (Empty);
-  rpc ListUsers(Empty) returns (UserListResponse);
-  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc CreateUser(CreateUserRequest) returns (User) {
+    option (google.api.http) = {
+      post: "/v1/users"
+      body: "*"
+    };
+  }
+  rpc GetUser(UserId) returns (User) {
+    option (google.api.http) = {
+      get: "/v1/users/{id}"
+    };
+  }
+  rpc UpdateUser(UpdateUserRequest) returns (User) {
+    option (google.api.http) = {
+      put: "/v1/users/{id}"
+      body: "*"
+    };
+  }
+  rpc DeleteUser(UserId) returns (Empty) {
+    option (google.api.http) = {
+      delete: "/v1/users/{id}"
+    };
+  }
+  rpc ListUsers(Empty) returns (UserListResponse) {
+    option (google.api.http) = {
+      get: "/v1/users"
+    };
+  }
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/v1/login"
+      body: "*"
+    };
+  }
 }

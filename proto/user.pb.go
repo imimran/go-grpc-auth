@@ -7,6 +7,7 @@
 package pb
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -441,7 +442,7 @@ var File_proto_user_proto protoreflect.FileDescriptor
 
 const file_proto_user_proto_rawDesc = "" +
 	"\n" +
-	"\x10proto/user.proto\x12\x04user\"e\n" +
+	"\x10proto/user.proto\x12\x04user\x1a\x1cgoogle/api/annotations.proto\"e\n" +
 	"\x04User\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
@@ -466,20 +467,20 @@ const file_proto_user_proto_rawDesc = "" +
 	"\x05Empty\"4\n" +
 	"\x10UserListResponse\x12 \n" +
 	"\x05users\x18\x01 \x03(\v2\n" +
-	".user.UserR\x05users2\xa5\x02\n" +
-	"\vUserService\x121\n" +
+	".user.UserR\x05users2\xaf\x03\n" +
+	"\vUserService\x12G\n" +
 	"\n" +
 	"CreateUser\x12\x17.user.CreateUserRequest\x1a\n" +
-	".user.User\x12#\n" +
+	".user.User\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/users\x12;\n" +
 	"\aGetUser\x12\f.user.UserId\x1a\n" +
-	".user.User\x121\n" +
+	".user.User\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/v1/users/{id}\x12L\n" +
 	"\n" +
 	"UpdateUser\x12\x17.user.UpdateUserRequest\x1a\n" +
-	".user.User\x12'\n" +
+	".user.User\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\x1a\x0e/v1/users/{id}\x12?\n" +
 	"\n" +
-	"DeleteUser\x12\f.user.UserId\x1a\v.user.Empty\x120\n" +
-	"\tListUsers\x12\v.user.Empty\x1a\x16.user.UserListResponse\x120\n" +
-	"\x05Login\x12\x12.user.LoginRequest\x1a\x13.user.LoginResponseB$Z\"github.com/imimran/go-grpc-auth/pbb\x06proto3"
+	"DeleteUser\x12\f.user.UserId\x1a\v.user.Empty\"\x16\x82\xd3\xe4\x93\x02\x10*\x0e/v1/users/{id}\x12C\n" +
+	"\tListUsers\x12\v.user.Empty\x1a\x16.user.UserListResponse\"\x11\x82\xd3\xe4\x93\x02\v\x12\t/v1/users\x12F\n" +
+	"\x05Login\x12\x12.user.LoginRequest\x1a\x13.user.LoginResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/loginB$Z\"github.com/imimran/go-grpc-auth/pbb\x06proto3"
 
 var (
 	file_proto_user_proto_rawDescOnce sync.Once

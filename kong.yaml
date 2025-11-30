@@ -1,0 +1,56 @@
+_format_version: "3.0"
+
+services:
+  - name: user-grpc
+    protocol: grpc
+    host: auth-grpc
+    port: 50051
+    routes:
+      - name: login-route
+        protocols: [ "http", "https" ]
+        paths: [ "/auth/login" ]
+        grpc_service: user.UserService
+        grpc_method: Login
+        methods: [ "POST" ]
+
+      - name: create-user-route
+        protocols: [ "http", "https" ]
+        paths: [ "/users" ]
+        grpc_service: user.UserService
+        grpc_method: CreateUser
+        methods: [ "POST" ]
+
+      - name: get-user-route
+        protocols: [ "http", "https" ]
+        paths: [ "/users/(?<id>\\d+)" ]
+        grpc_service: user.UserService
+        grpc_method: GetUser
+        methods: [ "GET" ]
+
+      - name: update-user-route
+        protocols: [ "http", "https" ]
+        paths: [ "/users" ]
+        grpc_service: user.UserService
+        grpc_method: UpdateUser
+        methods: [ "PUT" ]
+
+      - name: delete-user-route
+        protocols: [ "http", "https" ]
+        paths: [ "/users/(?<id>\\d+)" ]
+        grpc_service: user.UserService
+        grpc_method: DeleteUser
+        methods: [ "DELETE" ]
+
+      - name: list-users-route
+        protocols: [ "http", "https" ]
+        paths: [ "/users" ]
+        grpc_service: user.UserService
+        grpc_method: ListUsers
+        methods: [ "GET" ]
+
+plugins:
+  - name: jwt
+    service: user-grpc
+    config:
+      key_claim_name: iss
+      secret_is_base64: false

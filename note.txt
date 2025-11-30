@@ -4,5 +4,12 @@ protoc \
   --go-grpc_out=. --go-grpc_opt=paths=source_relative \
   proto/user.proto
 
+# proto ফাইল থেকে gRPC এবং grpc-gateway এর কোড জেনারেট
+  protoc -I. -I/home/imran/imimran/go-grpc-auth/googleapis \
+  --go_out . --go_opt paths=source_relative \
+  --go-grpc_out . --go-grpc_opt paths=source_relative \
+  --grpc-gateway_out . --grpc-gateway_opt paths=source_relative \
+  proto/user.proto
+
 # run server
   go run main.go serve
