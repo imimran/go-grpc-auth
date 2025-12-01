@@ -53,8 +53,8 @@ func serve(cmd *cobra.Command, args []string) {
 	userUsecase := usecase.NewUserUsecase(userRepo, []byte(cfg.JWT.Secret))
 	userHandler := grpcDelivery.NewUserHandler(userUsecase)
 
-	grpcPort := cfg.Server.Port   // e.g. ":50051"
-	httpPort := ":8080"           // grpc-gateway port
+	grpcPort := cfg.Server.GRPCPort   // e.g. ":50051"
+	httpPort := cfg.Server.HTTPPort         // grpc-gateway port
 
 	// gRPC server listener
 	lis, err := net.Listen("tcp", grpcPort)

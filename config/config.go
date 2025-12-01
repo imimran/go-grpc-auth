@@ -23,7 +23,8 @@ type DatabaseConfig struct {
 }
 
 type ServerConfig struct {
-	Port string `mapstructure:"port"`
+	GRPCPort string `mapstructure:"grpc_port"`       // ":50051"
+    HTTPPort string `mapstructure:"http_port"`
 }
 
 type JWTConfig struct {

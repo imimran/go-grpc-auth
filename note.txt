@@ -13,3 +13,37 @@ protoc \
 
 # run server
   go run main.go serve
+
+
+# deck install & command
+curl -L -o deck.tar.gz https://github.com/Kong/deck/releases/download/v1.54.0/deck_1.54.0_linux_amd64.tar.gz
+tar -xzf deck.tar.gz
+sudo mv deck /usr/local/bin/deck
+rm deck.tar.gz
+deck version
+deck gateway dump > kong.yaml
+deck gateway sync kong.yaml
+
+
+# Kong Admin api
+1.নতুন সার্ভিস তৈরি করা
+curl -X POST http://localhost:8001/services   --data name=user-rest   --data url=http://go-grpc-auth:8080
+এখানে name হলো সার্ভিসের নাম। url হলো ব্যাকএন্ড সার্ভিসের URL বা IP+পোর্ট।
+
+2.সার্ভিসে রুট (Route) যোগ করা
+curl -X POST http://localhost:8001/services/user-rest/routes   --data name=user-rest-route   --data paths[]=/v1   --data strip_path=false
+paths[] দিয়ে রিকুয়েস্টের URL পাথ নির্দিষ্ট করো।
+methods[] HTTP মেথড (GET, POST ইত্যাদি) নির্ধারণ করে।
+strip_path true হলে, Kong ব্যাকএন্ডে পাথ ছেঁটে দিবে।
+
+3.সার্ভিসের তালিকা দেখা
+curl http://localhost:8001/services
+
+4.প্লাগইন ইনস্টল করা
+curl -i -X POST http://localhost:8001/services/my-service/plugins \
+  --data name=rate-limiting \
+  --data config.second=5 \
+  --data config.hour=1000
+
+5.সার্ভিস ডিলিট করা
+curl -i -X DELETE http://localhost:8001/services/my-service
