@@ -2,7 +2,7 @@
 protoc \
   --go_out=. --go_opt=paths=source_relative \
   --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-  proto/user.proto
+  proto/protobuf.proto
 
 # proto ফাইল থেকে gRPC এবং grpc-gateway এর কোড জেনারেট
   protoc -I. -I/home/imran/imimran/go-grpc-auth/googleapis \
@@ -47,3 +47,42 @@ curl -i -X POST http://localhost:8001/services/my-service/plugins \
 
 5.সার্ভিস ডিলিট করা
 curl -i -X DELETE http://localhost:8001/services/my-service
+
+
+ 
+ 	
+# Project Archetecture commands:
+go install github.com/ofabry/go-callvis@latest
+go-callvis -http=:8081 -nostd ./
+
+
+# k8s guide
+minikube status
+kubectl cluster-info
+minikube dashboard
+
+minikube service my-nginx
+
+kubectl create deployment my-nginx --image=nginx
+kubectl delete deployment my-nginx
+kubectl get deployments
+kubectl get pods
+
+kubectl expose deployment my-nginx --port=80 --type=LoadBalancer
+
+kubectl logs prod_id
+
+kubectl set image deployment my-webapp webapp-demo=philippual/webapp-demo:05
+
+kubectl scale deployment my-webapp --replicas=4
+kubectl apply -f deployment-app.yml
+kubectl delete -f deployment-app.yml
+
+
+kubectl get services
+kubectl delete service my-nginx
+kubectl apply -f service-app.yml
+
+
+
+
