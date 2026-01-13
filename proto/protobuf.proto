@@ -90,10 +90,14 @@ message AddressListRequest {
     int32 limit = 2;
 }
 
-message AddressListResponse {
+message AddressListData {
     repeated Address addresses = 1;
-    int64 total_records = 2;
-    int32 total_pages = 3;
+}
+
+message AddressListResponse {
+    AddressListData data = 1;
+    int64 total = 2;
+    int32 page = 3;
 }
 
 // --- Services ---

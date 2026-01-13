@@ -816,18 +816,62 @@ func (x *AddressListRequest) GetLimit() int32 {
 	return 0
 }
 
-type AddressListResponse struct {
+type AddressListData struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Addresses     []*Address             `protobuf:"bytes,1,rep,name=addresses,proto3" json:"addresses,omitempty"`
-	TotalRecords  int64                  `protobuf:"varint,2,opt,name=total_records,json=totalRecords,proto3" json:"total_records,omitempty"`
-	TotalPages    int32                  `protobuf:"varint,3,opt,name=total_pages,json=totalPages,proto3" json:"total_pages,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddressListData) Reset() {
+	*x = AddressListData{}
+	mi := &file_proto_protobuf_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddressListData) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddressListData) ProtoMessage() {}
+
+func (x *AddressListData) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_protobuf_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddressListData.ProtoReflect.Descriptor instead.
+func (*AddressListData) Descriptor() ([]byte, []int) {
+	return file_proto_protobuf_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *AddressListData) GetAddresses() []*Address {
+	if x != nil {
+		return x.Addresses
+	}
+	return nil
+}
+
+type AddressListResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Data          *AddressListData       `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Total         int64                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
+	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *AddressListResponse) Reset() {
 	*x = AddressListResponse{}
-	mi := &file_proto_protobuf_proto_msgTypes[14]
+	mi := &file_proto_protobuf_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -839,7 +883,7 @@ func (x *AddressListResponse) String() string {
 func (*AddressListResponse) ProtoMessage() {}
 
 func (x *AddressListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_protobuf_proto_msgTypes[14]
+	mi := &file_proto_protobuf_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -852,26 +896,26 @@ func (x *AddressListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddressListResponse.ProtoReflect.Descriptor instead.
 func (*AddressListResponse) Descriptor() ([]byte, []int) {
-	return file_proto_protobuf_proto_rawDescGZIP(), []int{14}
+	return file_proto_protobuf_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *AddressListResponse) GetAddresses() []*Address {
+func (x *AddressListResponse) GetData() *AddressListData {
 	if x != nil {
-		return x.Addresses
+		return x.Data
 	}
 	return nil
 }
 
-func (x *AddressListResponse) GetTotalRecords() int64 {
+func (x *AddressListResponse) GetTotal() int64 {
 	if x != nil {
-		return x.TotalRecords
+		return x.Total
 	}
 	return 0
 }
 
-func (x *AddressListResponse) GetTotalPages() int32 {
+func (x *AddressListResponse) GetPage() int32 {
 	if x != nil {
-		return x.TotalPages
+		return x.Page
 	}
 	return 0
 }
@@ -933,12 +977,13 @@ const file_proto_protobuf_proto_rawDesc = "" +
 	"\x06source\x18\x05 \x01(\tR\x06source\">\n" +
 	"\x12AddressListRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x14\n" +
-	"\x05limit\x18\x02 \x01(\x05R\x05limit\"\x86\x01\n" +
-	"\x13AddressListResponse\x12)\n" +
-	"\taddresses\x18\x01 \x03(\v2\v.pb.AddressR\taddresses\x12#\n" +
-	"\rtotal_records\x18\x02 \x01(\x03R\ftotalRecords\x12\x1f\n" +
-	"\vtotal_pages\x18\x03 \x01(\x05R\n" +
-	"totalPages2\x97\x03\n" +
+	"\x05limit\x18\x02 \x01(\x05R\x05limit\"<\n" +
+	"\x0fAddressListData\x12)\n" +
+	"\taddresses\x18\x01 \x03(\v2\v.pb.AddressR\taddresses\"h\n" +
+	"\x13AddressListResponse\x12'\n" +
+	"\x04data\x18\x01 \x01(\v2\x13.pb.AddressListDataR\x04data\x12\x14\n" +
+	"\x05total\x18\x02 \x01(\x03R\x05total\x12\x12\n" +
+	"\x04page\x18\x03 \x01(\x05R\x04page2\x97\x03\n" +
 	"\vUserService\x12C\n" +
 	"\n" +
 	"CreateUser\x12\x15.pb.CreateUserRequest\x1a\b.pb.User\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/users\x127\n" +
@@ -971,7 +1016,7 @@ func file_proto_protobuf_proto_rawDescGZIP() []byte {
 	return file_proto_protobuf_proto_rawDescData
 }
 
-var file_proto_protobuf_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_proto_protobuf_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_proto_protobuf_proto_goTypes = []any{
 	(*Empty)(nil),                // 0: pb.Empty
 	(*Coordinates)(nil),          // 1: pb.Coordinates
@@ -987,41 +1032,43 @@ var file_proto_protobuf_proto_goTypes = []any{
 	(*CreateAddressRequest)(nil), // 11: pb.CreateAddressRequest
 	(*UpdateAddressRequest)(nil), // 12: pb.UpdateAddressRequest
 	(*AddressListRequest)(nil),   // 13: pb.AddressListRequest
-	(*AddressListResponse)(nil),  // 14: pb.AddressListResponse
+	(*AddressListData)(nil),      // 14: pb.AddressListData
+	(*AddressListResponse)(nil),  // 15: pb.AddressListResponse
 }
 var file_proto_protobuf_proto_depIdxs = []int32{
 	4,  // 0: pb.UserListResponse.users:type_name -> pb.User
 	1,  // 1: pb.Address.coordinates:type_name -> pb.Coordinates
 	1,  // 2: pb.CreateAddressRequest.coordinates:type_name -> pb.Coordinates
 	1,  // 3: pb.UpdateAddressRequest.coordinates:type_name -> pb.Coordinates
-	10, // 4: pb.AddressListResponse.addresses:type_name -> pb.Address
-	5,  // 5: pb.UserService.CreateUser:input_type -> pb.CreateUserRequest
-	2,  // 6: pb.UserService.GetUser:input_type -> pb.UserId
-	6,  // 7: pb.UserService.UpdateUser:input_type -> pb.UpdateUserRequest
-	2,  // 8: pb.UserService.DeleteUser:input_type -> pb.UserId
-	0,  // 9: pb.UserService.ListUsers:input_type -> pb.Empty
-	7,  // 10: pb.UserService.Login:input_type -> pb.LoginRequest
-	11, // 11: pb.AddressService.CreateAddress:input_type -> pb.CreateAddressRequest
-	3,  // 12: pb.AddressService.GetAddress:input_type -> pb.AddressId
-	12, // 13: pb.AddressService.UpdateAddress:input_type -> pb.UpdateAddressRequest
-	3,  // 14: pb.AddressService.DeleteAddress:input_type -> pb.AddressId
-	13, // 15: pb.AddressService.ListAddress:input_type -> pb.AddressListRequest
-	4,  // 16: pb.UserService.CreateUser:output_type -> pb.User
-	4,  // 17: pb.UserService.GetUser:output_type -> pb.User
-	4,  // 18: pb.UserService.UpdateUser:output_type -> pb.User
-	0,  // 19: pb.UserService.DeleteUser:output_type -> pb.Empty
-	9,  // 20: pb.UserService.ListUsers:output_type -> pb.UserListResponse
-	8,  // 21: pb.UserService.Login:output_type -> pb.LoginResponse
-	10, // 22: pb.AddressService.CreateAddress:output_type -> pb.Address
-	10, // 23: pb.AddressService.GetAddress:output_type -> pb.Address
-	10, // 24: pb.AddressService.UpdateAddress:output_type -> pb.Address
-	0,  // 25: pb.AddressService.DeleteAddress:output_type -> pb.Empty
-	14, // 26: pb.AddressService.ListAddress:output_type -> pb.AddressListResponse
-	16, // [16:27] is the sub-list for method output_type
-	5,  // [5:16] is the sub-list for method input_type
-	5,  // [5:5] is the sub-list for extension type_name
-	5,  // [5:5] is the sub-list for extension extendee
-	0,  // [0:5] is the sub-list for field type_name
+	10, // 4: pb.AddressListData.addresses:type_name -> pb.Address
+	14, // 5: pb.AddressListResponse.data:type_name -> pb.AddressListData
+	5,  // 6: pb.UserService.CreateUser:input_type -> pb.CreateUserRequest
+	2,  // 7: pb.UserService.GetUser:input_type -> pb.UserId
+	6,  // 8: pb.UserService.UpdateUser:input_type -> pb.UpdateUserRequest
+	2,  // 9: pb.UserService.DeleteUser:input_type -> pb.UserId
+	0,  // 10: pb.UserService.ListUsers:input_type -> pb.Empty
+	7,  // 11: pb.UserService.Login:input_type -> pb.LoginRequest
+	11, // 12: pb.AddressService.CreateAddress:input_type -> pb.CreateAddressRequest
+	3,  // 13: pb.AddressService.GetAddress:input_type -> pb.AddressId
+	12, // 14: pb.AddressService.UpdateAddress:input_type -> pb.UpdateAddressRequest
+	3,  // 15: pb.AddressService.DeleteAddress:input_type -> pb.AddressId
+	13, // 16: pb.AddressService.ListAddress:input_type -> pb.AddressListRequest
+	4,  // 17: pb.UserService.CreateUser:output_type -> pb.User
+	4,  // 18: pb.UserService.GetUser:output_type -> pb.User
+	4,  // 19: pb.UserService.UpdateUser:output_type -> pb.User
+	0,  // 20: pb.UserService.DeleteUser:output_type -> pb.Empty
+	9,  // 21: pb.UserService.ListUsers:output_type -> pb.UserListResponse
+	8,  // 22: pb.UserService.Login:output_type -> pb.LoginResponse
+	10, // 23: pb.AddressService.CreateAddress:output_type -> pb.Address
+	10, // 24: pb.AddressService.GetAddress:output_type -> pb.Address
+	10, // 25: pb.AddressService.UpdateAddress:output_type -> pb.Address
+	0,  // 26: pb.AddressService.DeleteAddress:output_type -> pb.Empty
+	15, // 27: pb.AddressService.ListAddress:output_type -> pb.AddressListResponse
+	17, // [17:28] is the sub-list for method output_type
+	6,  // [6:17] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_proto_protobuf_proto_init() }
@@ -1035,7 +1082,7 @@ func file_proto_protobuf_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_protobuf_proto_rawDesc), len(file_proto_protobuf_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

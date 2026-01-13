@@ -11,18 +11,19 @@ func ToProtoAddress(addr *domain.Address) *pb.Address {
 		return nil
 	}
 
+	// Ensure you are mapping individual fields from the Domain struct
+	// to the Protobuf struct.
 	return &pb.Address{
-        Id:                addr.ID.String(),
-        RawAddress:        addr.RawAddress,
-        NormalizedAddress: addr.NormalizedAddress,
-        // Mapping nested struct to nested Proto message
-        Coordinates: &pb.Coordinates{
-            Latitude:  addr.Coordinates.Latitude,
-            Longitude: addr.Coordinates.Longitude,
-        },
-        Accuracy: addr.Accuracy,
-        Source:   addr.Source,
-    }
+		Id:                addr.ID.String(), // MUST be the UUID string
+		RawAddress:        addr.RawAddress,
+		NormalizedAddress: addr.NormalizedAddress,
+		Coordinates: &pb.Coordinates{
+			Latitude:  addr.Coordinates.Latitude,
+			Longitude: addr.Coordinates.Longitude,
+		},
+		Accuracy: addr.Accuracy,
+		Source:   addr.Source,
+	}
 }
 
 // ToProtoAddressList converts a slice of Domain Addresses to a slice of Protobuf Addresses
