@@ -860,18 +860,133 @@ func (x *AddressListData) GetAddresses() []*Address {
 	return nil
 }
 
+type AddressResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data          *Address               `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddressResponse) Reset() {
+	*x = AddressResponse{}
+	mi := &file_proto_protobuf_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddressResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddressResponse) ProtoMessage() {}
+
+func (x *AddressResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_protobuf_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddressResponse.ProtoReflect.Descriptor instead.
+func (*AddressResponse) Descriptor() ([]byte, []int) {
+	return file_proto_protobuf_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *AddressResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *AddressResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *AddressResponse) GetData() *Address {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+// Wrapper for Delete
+type DeleteAddressResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteAddressResponse) Reset() {
+	*x = DeleteAddressResponse{}
+	mi := &file_proto_protobuf_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteAddressResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteAddressResponse) ProtoMessage() {}
+
+func (x *DeleteAddressResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_protobuf_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteAddressResponse.ProtoReflect.Descriptor instead.
+func (*DeleteAddressResponse) Descriptor() ([]byte, []int) {
+	return file_proto_protobuf_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *DeleteAddressResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *DeleteAddressResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 type AddressListResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Data          *AddressListData       `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
-	Total         int64                  `protobuf:"varint,2,opt,name=total,proto3" json:"total,omitempty"`
-	Page          int32                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	Data          *AddressListData       `protobuf:"bytes,3,opt,name=data,proto3" json:"data,omitempty"`
+	Total         int64                  `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
+	Page          int32                  `protobuf:"varint,5,opt,name=page,proto3" json:"page,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *AddressListResponse) Reset() {
 	*x = AddressListResponse{}
-	mi := &file_proto_protobuf_proto_msgTypes[15]
+	mi := &file_proto_protobuf_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -883,7 +998,7 @@ func (x *AddressListResponse) String() string {
 func (*AddressListResponse) ProtoMessage() {}
 
 func (x *AddressListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_protobuf_proto_msgTypes[15]
+	mi := &file_proto_protobuf_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -896,7 +1011,21 @@ func (x *AddressListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddressListResponse.ProtoReflect.Descriptor instead.
 func (*AddressListResponse) Descriptor() ([]byte, []int) {
-	return file_proto_protobuf_proto_rawDescGZIP(), []int{15}
+	return file_proto_protobuf_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *AddressListResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *AddressListResponse) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
 }
 
 func (x *AddressListResponse) GetData() *AddressListData {
@@ -979,11 +1108,20 @@ const file_proto_protobuf_proto_rawDesc = "" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x14\n" +
 	"\x05limit\x18\x02 \x01(\x05R\x05limit\"<\n" +
 	"\x0fAddressListData\x12)\n" +
-	"\taddresses\x18\x01 \x03(\v2\v.pb.AddressR\taddresses\"h\n" +
-	"\x13AddressListResponse\x12'\n" +
-	"\x04data\x18\x01 \x01(\v2\x13.pb.AddressListDataR\x04data\x12\x14\n" +
-	"\x05total\x18\x02 \x01(\x03R\x05total\x12\x12\n" +
-	"\x04page\x18\x03 \x01(\x05R\x04page2\x97\x03\n" +
+	"\taddresses\x18\x01 \x03(\v2\v.pb.AddressR\taddresses\"f\n" +
+	"\x0fAddressResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12\x1f\n" +
+	"\x04data\x18\x03 \x01(\v2\v.pb.AddressR\x04data\"K\n" +
+	"\x15DeleteAddressResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"\x9c\x01\n" +
+	"\x13AddressListResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12'\n" +
+	"\x04data\x18\x03 \x01(\v2\x13.pb.AddressListDataR\x04data\x12\x14\n" +
+	"\x05total\x18\x04 \x01(\x03R\x05total\x12\x12\n" +
+	"\x04page\x18\x05 \x01(\x05R\x04page2\x97\x03\n" +
 	"\vUserService\x12C\n" +
 	"\n" +
 	"CreateUser\x12\x15.pb.CreateUserRequest\x1a\b.pb.User\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/users\x127\n" +
@@ -995,13 +1133,13 @@ const file_proto_protobuf_proto_rawDesc = "" +
 	"DeleteUser\x12\n" +
 	".pb.UserId\x1a\t.pb.Empty\"\x16\x82\xd3\xe4\x93\x02\x10*\x0e/v1/users/{id}\x12?\n" +
 	"\tListUsers\x12\t.pb.Empty\x1a\x14.pb.UserListResponse\"\x11\x82\xd3\xe4\x93\x02\v\x12\t/v1/users\x12B\n" +
-	"\x05Login\x12\x10.pb.LoginRequest\x1a\x11.pb.LoginResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/login2\x9d\x03\n" +
-	"\x0eAddressService\x12P\n" +
-	"\rCreateAddress\x12\x18.pb.CreateAddressRequest\x1a\v.pb.Address\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/v1/addresses\x12D\n" +
+	"\x05Login\x12\x10.pb.LoginRequest\x1a\x11.pb.LoginResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/login2\xc5\x03\n" +
+	"\x0eAddressService\x12X\n" +
+	"\rCreateAddress\x12\x18.pb.CreateAddressRequest\x1a\x13.pb.AddressResponse\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/v1/addresses\x12L\n" +
 	"\n" +
-	"GetAddress\x12\r.pb.AddressId\x1a\v.pb.Address\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/addresses/{id}\x12U\n" +
-	"\rUpdateAddress\x12\x18.pb.UpdateAddressRequest\x1a\v.pb.Address\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/v1/addresses/{id}\x12E\n" +
-	"\rDeleteAddress\x12\r.pb.AddressId\x1a\t.pb.Empty\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/v1/addresses/{id}\x12U\n" +
+	"GetAddress\x12\r.pb.AddressId\x1a\x13.pb.AddressResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/addresses/{id}\x12]\n" +
+	"\rUpdateAddress\x12\x18.pb.UpdateAddressRequest\x1a\x13.pb.AddressResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/v1/addresses/{id}\x12U\n" +
+	"\rDeleteAddress\x12\r.pb.AddressId\x1a\x19.pb.DeleteAddressResponse\"\x1a\x82\xd3\xe4\x93\x02\x14*\x12/v1/addresses/{id}\x12U\n" +
 	"\vListAddress\x12\x16.pb.AddressListRequest\x1a\x17.pb.AddressListResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/v1/addressesB$Z\"github.com/imimran/go-grpc-auth/pbb\x06proto3"
 
 var (
@@ -1016,24 +1154,26 @@ func file_proto_protobuf_proto_rawDescGZIP() []byte {
 	return file_proto_protobuf_proto_rawDescData
 }
 
-var file_proto_protobuf_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_proto_protobuf_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_proto_protobuf_proto_goTypes = []any{
-	(*Empty)(nil),                // 0: pb.Empty
-	(*Coordinates)(nil),          // 1: pb.Coordinates
-	(*UserId)(nil),               // 2: pb.UserId
-	(*AddressId)(nil),            // 3: pb.AddressId
-	(*User)(nil),                 // 4: pb.User
-	(*CreateUserRequest)(nil),    // 5: pb.CreateUserRequest
-	(*UpdateUserRequest)(nil),    // 6: pb.UpdateUserRequest
-	(*LoginRequest)(nil),         // 7: pb.LoginRequest
-	(*LoginResponse)(nil),        // 8: pb.LoginResponse
-	(*UserListResponse)(nil),     // 9: pb.UserListResponse
-	(*Address)(nil),              // 10: pb.Address
-	(*CreateAddressRequest)(nil), // 11: pb.CreateAddressRequest
-	(*UpdateAddressRequest)(nil), // 12: pb.UpdateAddressRequest
-	(*AddressListRequest)(nil),   // 13: pb.AddressListRequest
-	(*AddressListData)(nil),      // 14: pb.AddressListData
-	(*AddressListResponse)(nil),  // 15: pb.AddressListResponse
+	(*Empty)(nil),                 // 0: pb.Empty
+	(*Coordinates)(nil),           // 1: pb.Coordinates
+	(*UserId)(nil),                // 2: pb.UserId
+	(*AddressId)(nil),             // 3: pb.AddressId
+	(*User)(nil),                  // 4: pb.User
+	(*CreateUserRequest)(nil),     // 5: pb.CreateUserRequest
+	(*UpdateUserRequest)(nil),     // 6: pb.UpdateUserRequest
+	(*LoginRequest)(nil),          // 7: pb.LoginRequest
+	(*LoginResponse)(nil),         // 8: pb.LoginResponse
+	(*UserListResponse)(nil),      // 9: pb.UserListResponse
+	(*Address)(nil),               // 10: pb.Address
+	(*CreateAddressRequest)(nil),  // 11: pb.CreateAddressRequest
+	(*UpdateAddressRequest)(nil),  // 12: pb.UpdateAddressRequest
+	(*AddressListRequest)(nil),    // 13: pb.AddressListRequest
+	(*AddressListData)(nil),       // 14: pb.AddressListData
+	(*AddressResponse)(nil),       // 15: pb.AddressResponse
+	(*DeleteAddressResponse)(nil), // 16: pb.DeleteAddressResponse
+	(*AddressListResponse)(nil),   // 17: pb.AddressListResponse
 }
 var file_proto_protobuf_proto_depIdxs = []int32{
 	4,  // 0: pb.UserListResponse.users:type_name -> pb.User
@@ -1041,34 +1181,35 @@ var file_proto_protobuf_proto_depIdxs = []int32{
 	1,  // 2: pb.CreateAddressRequest.coordinates:type_name -> pb.Coordinates
 	1,  // 3: pb.UpdateAddressRequest.coordinates:type_name -> pb.Coordinates
 	10, // 4: pb.AddressListData.addresses:type_name -> pb.Address
-	14, // 5: pb.AddressListResponse.data:type_name -> pb.AddressListData
-	5,  // 6: pb.UserService.CreateUser:input_type -> pb.CreateUserRequest
-	2,  // 7: pb.UserService.GetUser:input_type -> pb.UserId
-	6,  // 8: pb.UserService.UpdateUser:input_type -> pb.UpdateUserRequest
-	2,  // 9: pb.UserService.DeleteUser:input_type -> pb.UserId
-	0,  // 10: pb.UserService.ListUsers:input_type -> pb.Empty
-	7,  // 11: pb.UserService.Login:input_type -> pb.LoginRequest
-	11, // 12: pb.AddressService.CreateAddress:input_type -> pb.CreateAddressRequest
-	3,  // 13: pb.AddressService.GetAddress:input_type -> pb.AddressId
-	12, // 14: pb.AddressService.UpdateAddress:input_type -> pb.UpdateAddressRequest
-	3,  // 15: pb.AddressService.DeleteAddress:input_type -> pb.AddressId
-	13, // 16: pb.AddressService.ListAddress:input_type -> pb.AddressListRequest
-	4,  // 17: pb.UserService.CreateUser:output_type -> pb.User
-	4,  // 18: pb.UserService.GetUser:output_type -> pb.User
-	4,  // 19: pb.UserService.UpdateUser:output_type -> pb.User
-	0,  // 20: pb.UserService.DeleteUser:output_type -> pb.Empty
-	9,  // 21: pb.UserService.ListUsers:output_type -> pb.UserListResponse
-	8,  // 22: pb.UserService.Login:output_type -> pb.LoginResponse
-	10, // 23: pb.AddressService.CreateAddress:output_type -> pb.Address
-	10, // 24: pb.AddressService.GetAddress:output_type -> pb.Address
-	10, // 25: pb.AddressService.UpdateAddress:output_type -> pb.Address
-	0,  // 26: pb.AddressService.DeleteAddress:output_type -> pb.Empty
-	15, // 27: pb.AddressService.ListAddress:output_type -> pb.AddressListResponse
-	17, // [17:28] is the sub-list for method output_type
-	6,  // [6:17] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	10, // 5: pb.AddressResponse.data:type_name -> pb.Address
+	14, // 6: pb.AddressListResponse.data:type_name -> pb.AddressListData
+	5,  // 7: pb.UserService.CreateUser:input_type -> pb.CreateUserRequest
+	2,  // 8: pb.UserService.GetUser:input_type -> pb.UserId
+	6,  // 9: pb.UserService.UpdateUser:input_type -> pb.UpdateUserRequest
+	2,  // 10: pb.UserService.DeleteUser:input_type -> pb.UserId
+	0,  // 11: pb.UserService.ListUsers:input_type -> pb.Empty
+	7,  // 12: pb.UserService.Login:input_type -> pb.LoginRequest
+	11, // 13: pb.AddressService.CreateAddress:input_type -> pb.CreateAddressRequest
+	3,  // 14: pb.AddressService.GetAddress:input_type -> pb.AddressId
+	12, // 15: pb.AddressService.UpdateAddress:input_type -> pb.UpdateAddressRequest
+	3,  // 16: pb.AddressService.DeleteAddress:input_type -> pb.AddressId
+	13, // 17: pb.AddressService.ListAddress:input_type -> pb.AddressListRequest
+	4,  // 18: pb.UserService.CreateUser:output_type -> pb.User
+	4,  // 19: pb.UserService.GetUser:output_type -> pb.User
+	4,  // 20: pb.UserService.UpdateUser:output_type -> pb.User
+	0,  // 21: pb.UserService.DeleteUser:output_type -> pb.Empty
+	9,  // 22: pb.UserService.ListUsers:output_type -> pb.UserListResponse
+	8,  // 23: pb.UserService.Login:output_type -> pb.LoginResponse
+	15, // 24: pb.AddressService.CreateAddress:output_type -> pb.AddressResponse
+	15, // 25: pb.AddressService.GetAddress:output_type -> pb.AddressResponse
+	15, // 26: pb.AddressService.UpdateAddress:output_type -> pb.AddressResponse
+	16, // 27: pb.AddressService.DeleteAddress:output_type -> pb.DeleteAddressResponse
+	17, // 28: pb.AddressService.ListAddress:output_type -> pb.AddressListResponse
+	18, // [18:29] is the sub-list for method output_type
+	7,  // [7:18] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_proto_protobuf_proto_init() }
@@ -1082,7 +1223,7 @@ func file_proto_protobuf_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_protobuf_proto_rawDesc), len(file_proto_protobuf_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

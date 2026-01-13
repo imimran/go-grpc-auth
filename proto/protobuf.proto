@@ -94,10 +94,24 @@ message AddressListData {
     repeated Address addresses = 1;
 }
 
+message AddressResponse {
+    bool success = 1;
+    string message = 2;
+    Address data = 3; 
+}
+
+// Wrapper for Delete
+message DeleteAddressResponse {
+    bool success = 1;
+    string message = 2;
+}
+
 message AddressListResponse {
-    AddressListData data = 1;
-    int64 total = 2;
-    int32 page = 3;
+    bool success = 1;        
+    string message = 2;
+    AddressListData data = 3;
+    int64 total = 4;
+    int32 page = 5;
 }
 
 // --- Services ---
@@ -124,16 +138,16 @@ service UserService {
 }
 
 service AddressService {
-    rpc CreateAddress(CreateAddressRequest) returns (Address) {
+    rpc CreateAddress(CreateAddressRequest) returns (AddressResponse) {
         option (google.api.http) = { post: "/v1/addresses" body: "*" };
     }
-    rpc GetAddress(AddressId) returns (Address) {
+    rpc GetAddress(AddressId) returns (AddressResponse) {
         option (google.api.http) = { get: "/v1/addresses/{id}" };
     }
-    rpc UpdateAddress(UpdateAddressRequest) returns (Address) {
+    rpc UpdateAddress(UpdateAddressRequest) returns (AddressResponse) {
         option (google.api.http) = { put: "/v1/addresses/{id}" body: "*" };
     }
-    rpc DeleteAddress(AddressId) returns (Empty) {
+    rpc DeleteAddress(AddressId) returns (DeleteAddressResponse) {
         option (google.api.http) = { delete: "/v1/addresses/{id}" };
     }
     rpc ListAddress(AddressListRequest) returns (AddressListResponse) {

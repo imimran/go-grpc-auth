@@ -324,10 +324,10 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AddressServiceClient interface {
-	CreateAddress(ctx context.Context, in *CreateAddressRequest, opts ...grpc.CallOption) (*Address, error)
-	GetAddress(ctx context.Context, in *AddressId, opts ...grpc.CallOption) (*Address, error)
-	UpdateAddress(ctx context.Context, in *UpdateAddressRequest, opts ...grpc.CallOption) (*Address, error)
-	DeleteAddress(ctx context.Context, in *AddressId, opts ...grpc.CallOption) (*Empty, error)
+	CreateAddress(ctx context.Context, in *CreateAddressRequest, opts ...grpc.CallOption) (*AddressResponse, error)
+	GetAddress(ctx context.Context, in *AddressId, opts ...grpc.CallOption) (*AddressResponse, error)
+	UpdateAddress(ctx context.Context, in *UpdateAddressRequest, opts ...grpc.CallOption) (*AddressResponse, error)
+	DeleteAddress(ctx context.Context, in *AddressId, opts ...grpc.CallOption) (*DeleteAddressResponse, error)
 	ListAddress(ctx context.Context, in *AddressListRequest, opts ...grpc.CallOption) (*AddressListResponse, error)
 }
 
@@ -339,9 +339,9 @@ func NewAddressServiceClient(cc grpc.ClientConnInterface) AddressServiceClient {
 	return &addressServiceClient{cc}
 }
 
-func (c *addressServiceClient) CreateAddress(ctx context.Context, in *CreateAddressRequest, opts ...grpc.CallOption) (*Address, error) {
+func (c *addressServiceClient) CreateAddress(ctx context.Context, in *CreateAddressRequest, opts ...grpc.CallOption) (*AddressResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Address)
+	out := new(AddressResponse)
 	err := c.cc.Invoke(ctx, AddressService_CreateAddress_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -349,9 +349,9 @@ func (c *addressServiceClient) CreateAddress(ctx context.Context, in *CreateAddr
 	return out, nil
 }
 
-func (c *addressServiceClient) GetAddress(ctx context.Context, in *AddressId, opts ...grpc.CallOption) (*Address, error) {
+func (c *addressServiceClient) GetAddress(ctx context.Context, in *AddressId, opts ...grpc.CallOption) (*AddressResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Address)
+	out := new(AddressResponse)
 	err := c.cc.Invoke(ctx, AddressService_GetAddress_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -359,9 +359,9 @@ func (c *addressServiceClient) GetAddress(ctx context.Context, in *AddressId, op
 	return out, nil
 }
 
-func (c *addressServiceClient) UpdateAddress(ctx context.Context, in *UpdateAddressRequest, opts ...grpc.CallOption) (*Address, error) {
+func (c *addressServiceClient) UpdateAddress(ctx context.Context, in *UpdateAddressRequest, opts ...grpc.CallOption) (*AddressResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Address)
+	out := new(AddressResponse)
 	err := c.cc.Invoke(ctx, AddressService_UpdateAddress_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -369,9 +369,9 @@ func (c *addressServiceClient) UpdateAddress(ctx context.Context, in *UpdateAddr
 	return out, nil
 }
 
-func (c *addressServiceClient) DeleteAddress(ctx context.Context, in *AddressId, opts ...grpc.CallOption) (*Empty, error) {
+func (c *addressServiceClient) DeleteAddress(ctx context.Context, in *AddressId, opts ...grpc.CallOption) (*DeleteAddressResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Empty)
+	out := new(DeleteAddressResponse)
 	err := c.cc.Invoke(ctx, AddressService_DeleteAddress_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -393,10 +393,10 @@ func (c *addressServiceClient) ListAddress(ctx context.Context, in *AddressListR
 // All implementations must embed UnimplementedAddressServiceServer
 // for forward compatibility.
 type AddressServiceServer interface {
-	CreateAddress(context.Context, *CreateAddressRequest) (*Address, error)
-	GetAddress(context.Context, *AddressId) (*Address, error)
-	UpdateAddress(context.Context, *UpdateAddressRequest) (*Address, error)
-	DeleteAddress(context.Context, *AddressId) (*Empty, error)
+	CreateAddress(context.Context, *CreateAddressRequest) (*AddressResponse, error)
+	GetAddress(context.Context, *AddressId) (*AddressResponse, error)
+	UpdateAddress(context.Context, *UpdateAddressRequest) (*AddressResponse, error)
+	DeleteAddress(context.Context, *AddressId) (*DeleteAddressResponse, error)
 	ListAddress(context.Context, *AddressListRequest) (*AddressListResponse, error)
 	mustEmbedUnimplementedAddressServiceServer()
 }
@@ -408,16 +408,16 @@ type AddressServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAddressServiceServer struct{}
 
-func (UnimplementedAddressServiceServer) CreateAddress(context.Context, *CreateAddressRequest) (*Address, error) {
+func (UnimplementedAddressServiceServer) CreateAddress(context.Context, *CreateAddressRequest) (*AddressResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAddress not implemented")
 }
-func (UnimplementedAddressServiceServer) GetAddress(context.Context, *AddressId) (*Address, error) {
+func (UnimplementedAddressServiceServer) GetAddress(context.Context, *AddressId) (*AddressResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAddress not implemented")
 }
-func (UnimplementedAddressServiceServer) UpdateAddress(context.Context, *UpdateAddressRequest) (*Address, error) {
+func (UnimplementedAddressServiceServer) UpdateAddress(context.Context, *UpdateAddressRequest) (*AddressResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateAddress not implemented")
 }
-func (UnimplementedAddressServiceServer) DeleteAddress(context.Context, *AddressId) (*Empty, error) {
+func (UnimplementedAddressServiceServer) DeleteAddress(context.Context, *AddressId) (*DeleteAddressResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAddress not implemented")
 }
 func (UnimplementedAddressServiceServer) ListAddress(context.Context, *AddressListRequest) (*AddressListResponse, error) {

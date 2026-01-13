@@ -49,6 +49,8 @@ func (h *AddressHandler) ListAddress(ctx context.Context, req *pb.AddressListReq
 	}
 	// 4. Construct New Response Format
 	return &pb.AddressListResponse{
+		Success: true,
+		Message: "Addresses retrieved successfully",
 		Data: &pb.AddressListData{
 			Addresses: pbAddresses,
 		},
@@ -57,7 +59,7 @@ func (h *AddressHandler) ListAddress(ctx context.Context, req *pb.AddressListReq
 	}, nil
 }
 
-func (h *AddressHandler) CreateAddress(ctx context.Context, req *pb.CreateAddressRequest) (*pb.Address, error) {
+func (h *AddressHandler) CreateAddress(ctx context.Context, req *pb.CreateAddressRequest) (*pb.AddressResponse, error) {
 	// Map request to Domain model using the nested Coordinates struct
 	addr := &domain.Address{
 		RawAddress: req.RawAddress,
@@ -69,15 +71,18 @@ func (h *AddressHandler) CreateAddress(ctx context.Context, req *pb.CreateAddres
 		Source:   req.Source,
 	}
 
-	err := h.addressUC.Create(ctx, addr)
-	if err != nil {
-		return nil, err
+	if err := h.addressUC.Create(ctx, addr); err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to create: %v", err)
 	}
 
-	return transformer.ToProtoAddress(addr), nil
+	return &pb.AddressResponse{
+		Success: true,
+		Message: "Address created successfully",
+		Data:    transformer.ToProtoAddress(addr),
+	}, nil
 }
 
-func (h *AddressHandler) GetAddress(ctx context.Context, req *pb.AddressId) (*pb.Address, error) {
+func (h *AddressHandler) GetAddress(ctx context.Context, req *pb.AddressId) (*pb.AddressResponse, error) {
 	address, err := h.addressUC.GetByID(ctx, req.GetId())
 	if err != nil {
 		// Check if the error is "Record Not Found"
@@ -88,10 +93,14 @@ func (h *AddressHandler) GetAddress(ctx context.Context, req *pb.AddressId) (*pb
 		return nil, status.Errorf(codes.Internal, "Database error: %v", err)
 	}
 
-	return transformer.ToProtoAddress(address), nil
+	return &pb.AddressResponse{
+		Success: true,
+		Message: "Address retrieved successfully",
+		Data:    transformer.ToProtoAddress(address),
+	}, nil
 }
 
-func (h *AddressHandler) UpdateAddress(ctx context.Context, req *pb.UpdateAddressRequest) (*pb.Address, error) {
+func (h *AddressHandler) UpdateAddress(ctx context.Context, req *pb.UpdateAddressRequest) (*pb.AddressResponse, error) {
 	// 1. Parse string ID to uuid.UUID
 	parsedID, err := uuid.Parse(req.Id)
 	if err != nil {
@@ -115,14 +124,21 @@ func (h *AddressHandler) UpdateAddress(ctx context.Context, req *pb.UpdateAddres
 		return nil, status.Errorf(codes.Internal, "update failed: %v", err)
 	}
 
-	return transformer.ToProtoAddress(addr), nil
+	return &pb.AddressResponse{
+		Success: true,
+		Message: "Address updated successfully",
+		Data:    transformer.ToProtoAddress(addr),
+	}, nil
 }
 
-func (h *AddressHandler) DeleteAddress(ctx context.Context, req *pb.AddressId) (*pb.Empty, error) {
+func (h *AddressHandler) DeleteAddress(ctx context.Context, req *pb.AddressId) (*pb.DeleteAddressResponse, error) {
 	err := h.addressUC.Delete(ctx, req.Id)
 	if err != nil {
 		return nil, err
 	}
 
-	return &pb.Empty{}, nil
+	return &pb.DeleteAddressResponse{
+		Success: true,
+		Message: "Address deleted successfully",
+	}, nil
 }
