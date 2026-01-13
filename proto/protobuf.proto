@@ -1,14 +1,20 @@
 syntax = "proto3";
 
-package user;
+// Changed package to 'pb' to avoid confusion since it contains more than just users
+package pb; 
 
 option go_package = "github.com/imimran/go-grpc-auth/pb";
 
 import "google/api/annotations.proto";
 
-// --- Shared Utility Messages (Defined ONCE) ---
+// --- Shared Utility Messages ---
 
 message Empty {}
+
+message Coordinates {
+  double latitude = 1;
+  double longitude = 2;
+}
 
 message UserId {
   int64 id = 1; 
@@ -23,8 +29,7 @@ message AddressId {
 message User {
   int64 id = 1;
   string email = 2;
-  string password = 3; 
-  string full_name = 4;
+  string full_name = 3;
 }
 
 message CreateUserRequest {
@@ -59,32 +64,36 @@ message Address {
     string id = 1;
     string raw_address = 2;
     string normalized_address = 3;
-    double latitude = 4;
-    double longitude = 5;
-    string accuracy = 6;
-    string source = 7;
+    Coordinates coordinates = 4; 
+    string accuracy = 5;
+    string source = 6;
 }
 
 message CreateAddressRequest {
-    int64 user_id = 1; // Changed to int64 to match UserId type above
+    int64 user_id = 1;
     string raw_address = 2;
-    double latitude = 3;
-    double longitude = 4;
-    string accuracy = 5;
-    string source = 6;
+    Coordinates coordinates = 3;
+    string accuracy = 4;
+    string source = 5;
 }
 
 message UpdateAddressRequest {
     string id = 1;
     string raw_address = 2;
-    double latitude = 3;
-    double longitude = 4;
-    string accuracy = 5;
-    string source = 6;
+    Coordinates coordinates = 3;
+    string accuracy = 4;
+    string source = 5;
+}
+
+message AddressListRequest {
+    int32 page = 1;
+    int32 limit = 2;
 }
 
 message AddressListResponse {
     repeated Address addresses = 1;
+    int64 total_records = 2;
+    int32 total_pages = 3;
 }
 
 // --- Services ---
@@ -111,9 +120,19 @@ service UserService {
 }
 
 service AddressService {
-    rpc CreateAddress(CreateAddressRequest) returns (Address);
-    rpc GetAddress(AddressId) returns (Address);
-    rpc UpdateAddress(UpdateAddressRequest) returns (Address);
-    rpc DeleteAddress(AddressId) returns (Empty);
-    rpc ListAddressesByUserId(UserId) returns (AddressListResponse);
+    rpc CreateAddress(CreateAddressRequest) returns (Address) {
+        option (google.api.http) = { post: "/v1/addresses" body: "*" };
+    }
+    rpc GetAddress(AddressId) returns (Address) {
+        option (google.api.http) = { get: "/v1/addresses/{id}" };
+    }
+    rpc UpdateAddress(UpdateAddressRequest) returns (Address) {
+        option (google.api.http) = { put: "/v1/addresses/{id}" body: "*" };
+    }
+    rpc DeleteAddress(AddressId) returns (Empty) {
+        option (google.api.http) = { delete: "/v1/addresses/{id}" };
+    }
+    rpc ListAddress(AddressListRequest) returns (AddressListResponse) {
+        option (google.api.http) = { get: "/v1/addresses" };
+    }
 }

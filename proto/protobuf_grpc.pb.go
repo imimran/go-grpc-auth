@@ -4,6 +4,8 @@
 // - protoc             v3.21.12
 // source: proto/protobuf.proto
 
+// Changed package to 'pb' to avoid confusion since it contains more than just users
+
 package pb
 
 import (
@@ -19,12 +21,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UserService_CreateUser_FullMethodName = "/user.UserService/CreateUser"
-	UserService_GetUser_FullMethodName    = "/user.UserService/GetUser"
-	UserService_UpdateUser_FullMethodName = "/user.UserService/UpdateUser"
-	UserService_DeleteUser_FullMethodName = "/user.UserService/DeleteUser"
-	UserService_ListUsers_FullMethodName  = "/user.UserService/ListUsers"
-	UserService_Login_FullMethodName      = "/user.UserService/Login"
+	UserService_CreateUser_FullMethodName = "/pb.UserService/CreateUser"
+	UserService_GetUser_FullMethodName    = "/pb.UserService/GetUser"
+	UserService_UpdateUser_FullMethodName = "/pb.UserService/UpdateUser"
+	UserService_DeleteUser_FullMethodName = "/pb.UserService/DeleteUser"
+	UserService_ListUsers_FullMethodName  = "/pb.UserService/ListUsers"
+	UserService_Login_FullMethodName      = "/pb.UserService/Login"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -278,7 +280,7 @@ func _UserService_Login_Handler(srv interface{}, ctx context.Context, dec func(i
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var UserService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user.UserService",
+	ServiceName: "pb.UserService",
 	HandlerType: (*UserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -311,11 +313,11 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	AddressService_CreateAddress_FullMethodName         = "/user.AddressService/CreateAddress"
-	AddressService_GetAddress_FullMethodName            = "/user.AddressService/GetAddress"
-	AddressService_UpdateAddress_FullMethodName         = "/user.AddressService/UpdateAddress"
-	AddressService_DeleteAddress_FullMethodName         = "/user.AddressService/DeleteAddress"
-	AddressService_ListAddressesByUserId_FullMethodName = "/user.AddressService/ListAddressesByUserId"
+	AddressService_CreateAddress_FullMethodName = "/pb.AddressService/CreateAddress"
+	AddressService_GetAddress_FullMethodName    = "/pb.AddressService/GetAddress"
+	AddressService_UpdateAddress_FullMethodName = "/pb.AddressService/UpdateAddress"
+	AddressService_DeleteAddress_FullMethodName = "/pb.AddressService/DeleteAddress"
+	AddressService_ListAddress_FullMethodName   = "/pb.AddressService/ListAddress"
 )
 
 // AddressServiceClient is the client API for AddressService service.
@@ -326,7 +328,7 @@ type AddressServiceClient interface {
 	GetAddress(ctx context.Context, in *AddressId, opts ...grpc.CallOption) (*Address, error)
 	UpdateAddress(ctx context.Context, in *UpdateAddressRequest, opts ...grpc.CallOption) (*Address, error)
 	DeleteAddress(ctx context.Context, in *AddressId, opts ...grpc.CallOption) (*Empty, error)
-	ListAddressesByUserId(ctx context.Context, in *UserId, opts ...grpc.CallOption) (*AddressListResponse, error)
+	ListAddress(ctx context.Context, in *AddressListRequest, opts ...grpc.CallOption) (*AddressListResponse, error)
 }
 
 type addressServiceClient struct {
@@ -377,10 +379,10 @@ func (c *addressServiceClient) DeleteAddress(ctx context.Context, in *AddressId,
 	return out, nil
 }
 
-func (c *addressServiceClient) ListAddressesByUserId(ctx context.Context, in *UserId, opts ...grpc.CallOption) (*AddressListResponse, error) {
+func (c *addressServiceClient) ListAddress(ctx context.Context, in *AddressListRequest, opts ...grpc.CallOption) (*AddressListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AddressListResponse)
-	err := c.cc.Invoke(ctx, AddressService_ListAddressesByUserId_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AddressService_ListAddress_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -395,7 +397,7 @@ type AddressServiceServer interface {
 	GetAddress(context.Context, *AddressId) (*Address, error)
 	UpdateAddress(context.Context, *UpdateAddressRequest) (*Address, error)
 	DeleteAddress(context.Context, *AddressId) (*Empty, error)
-	ListAddressesByUserId(context.Context, *UserId) (*AddressListResponse, error)
+	ListAddress(context.Context, *AddressListRequest) (*AddressListResponse, error)
 	mustEmbedUnimplementedAddressServiceServer()
 }
 
@@ -418,8 +420,8 @@ func (UnimplementedAddressServiceServer) UpdateAddress(context.Context, *UpdateA
 func (UnimplementedAddressServiceServer) DeleteAddress(context.Context, *AddressId) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAddress not implemented")
 }
-func (UnimplementedAddressServiceServer) ListAddressesByUserId(context.Context, *UserId) (*AddressListResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListAddressesByUserId not implemented")
+func (UnimplementedAddressServiceServer) ListAddress(context.Context, *AddressListRequest) (*AddressListResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListAddress not implemented")
 }
 func (UnimplementedAddressServiceServer) mustEmbedUnimplementedAddressServiceServer() {}
 func (UnimplementedAddressServiceServer) testEmbeddedByValue()                        {}
@@ -514,20 +516,20 @@ func _AddressService_DeleteAddress_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AddressService_ListAddressesByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserId)
+func _AddressService_ListAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddressListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AddressServiceServer).ListAddressesByUserId(ctx, in)
+		return srv.(AddressServiceServer).ListAddress(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AddressService_ListAddressesByUserId_FullMethodName,
+		FullMethod: AddressService_ListAddress_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AddressServiceServer).ListAddressesByUserId(ctx, req.(*UserId))
+		return srv.(AddressServiceServer).ListAddress(ctx, req.(*AddressListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -536,7 +538,7 @@ func _AddressService_ListAddressesByUserId_Handler(srv interface{}, ctx context.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AddressService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "user.AddressService",
+	ServiceName: "pb.AddressService",
 	HandlerType: (*AddressServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -556,8 +558,8 @@ var AddressService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AddressService_DeleteAddress_Handler,
 		},
 		{
-			MethodName: "ListAddressesByUserId",
-			Handler:    _AddressService_ListAddressesByUserId_Handler,
+			MethodName: "ListAddress",
+			Handler:    _AddressService_ListAddress_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

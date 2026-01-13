@@ -22,6 +22,10 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"
+
+	addressHandlerPkg "github.com/imimran/go-grpc-auth/address/delivery/grpc"
+	addressRepoPkg "github.com/imimran/go-grpc-auth/address/repository"
+	addressUsecasePkg "github.com/imimran/go-grpc-auth/address/usecase"
 )
 
 var serveCmd = &cobra.Command{
@@ -53,8 +57,13 @@ func serve(cmd *cobra.Command, args []string) {
 	userUsecase := usecase.NewUserUsecase(userRepo, []byte(cfg.JWT.Secret))
 	userHandler := grpcDelivery.NewUserHandler(userUsecase)
 
-	grpcPort := cfg.Server.GRPCPort   // e.g. ":50051"
-	httpPort := cfg.Server.HTTPPort         // grpc-gateway port
+	// Setup address repository, usecase, handler
+	addressRepo := addressRepoPkg.NewAddressRepo(postgresDB)
+	addressUC := addressUsecasePkg.NewAddressUsecase(addressRepo)
+	addressHandler := addressHandlerPkg.NewAddressHandler(addressUC)
+
+	grpcPort := cfg.Server.GRPCPort // e.g. ":50051"
+	httpPort := cfg.Server.HTTPPort // grpc-gateway port
 
 	// gRPC server listener
 	lis, err := net.Listen("tcp", grpcPort)
@@ -64,6 +73,7 @@ func serve(cmd *cobra.Command, args []string) {
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterUserServiceServer(grpcServer, userHandler)
+	pb.RegisterAddressServiceServer(grpcServer, addressHandler)
 	reflection.Register(grpcServer) // optional
 
 	// Graceful shutdown channel
@@ -122,5 +132,3 @@ func serve(cmd *cobra.Command, args []string) {
 
 	log.Println("Servers stopped gracefully")
 }
-
-
